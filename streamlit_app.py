@@ -57,4 +57,4 @@ if ingredients_list:                        # test if ingredients_list is not nu
 # new section to display smoothiefroot nutrition information
 import requests
 smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
-st.text(smoothiefroot_response.json)
+st.text(smoothiefroot_response.json())
