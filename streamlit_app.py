@@ -25,7 +25,6 @@ pd_df=my_dataframe.to_pandas()
 
 ingredients_list = st.multiselect(
     "Choose up to 5 ingredients",
-    # ["Green", "Yellow", "Red", "Blue"],   # Manually provided list
     my_dataframe,                            # my_dataframe is a list
     max_selections=5,
     # default=["Apples", "Figs"],
@@ -45,7 +44,8 @@ if ingredients_list:                        # test if ingredients_list is not nu
         st.write('The search value for ', fruit_chosen,' is ', search_on, '.')
         
         st.subheader(fruit_chosen + ' Nutrition Information')
-        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + fruit_chosen)
+        # smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + fruit_chosen) # old statement passing fruit_chosen to the api
+        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + search_on)      # new statement passing search_on to the api
         sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
 
         
