@@ -35,7 +35,8 @@ if ingredients_list:                        # test if ingredients_list is not nu
 
     for fruit_chosen in ingredients_list:   # build up a string by concatenating each item in ingredients_list
         ingredients_string += fruit_chosen + ' '
-        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+        st.subheader(fruit_chosen + ' Nutrition Information')
+        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + fruit_chosen)
         sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
 
         
