@@ -1,8 +1,6 @@
 # Import python packages
 import streamlit as st
-
 from snowflake.snowpark.functions import col
-
 
 # Write directly to the app
 st.title(f":cup_with_straw: Customize Your Smoothie :cup_with_straw: ")
@@ -36,10 +34,12 @@ if ingredients_list:                        # test if ingredients_list is not nu
 
     for fruit_chosen in ingredients_list:   # build up a string by concatenating each item in ingredients_list
         ingredients_string += fruit_chosen + ' '
-    
+        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+        sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+
+        
     # st.write(ingredients_string)  
-    
-    my_insert_stmt = """ insert into smoothies.public.orders(ingredients, name_on_order)
+        my_insert_stmt = """ insert into smoothies.public.orders(ingredients, name_on_order)
         values ('""" + ingredients_string + "', '" + name_on_order + """')"""  # using triple double quotes to enclose multiline string          
     
     # my_insert_stmt = "insert into smoothies.public.orders(ingredients) values ('" + ingredients_string + "')"
@@ -53,9 +53,4 @@ if ingredients_list:                        # test if ingredients_list is not nu
         session.sql(my_insert_stmt).collect()
         st.success('Your Smoothie is ordered ' + name_on_order + '!', icon="✅")
 
-    
-# new section to display smoothiefroot nutrition information
-import requests
-smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
-# st.text(smoothiefroot_response.json())
-sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+
